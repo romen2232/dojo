@@ -1,0 +1,43 @@
+# PHP
+/vendor/
+composer.phar
+*.php~
+.phpunit.result.cache
+.php-cs-fixer.cache
+
+# Docker
+.docker/
+docker-compose.override.yml
+
+# IDE & Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Cache and logs
+/var/
+/logs/
+*.log
+*.cache
+
+# Build artifacts
+/build/
+/dist/
+/node_modules/
+
+# Testing
+/coverage/
+.phpunit.cache/
+
+# Project specific
+/katas/*
+!katas/.gitkeep
+/kataExample/
