@@ -57,6 +57,7 @@ class Kata
             if (preg_match('/^\d (kyu|dan)$/', $this->difficulty)) {
                 throw new InvalidArgumentException('Invalid difficulty level. Must be between 1-8 kyu or 1-8 dan');
             }
+
             throw new InvalidArgumentException('Invalid difficulty format. Must be "X kyu" or "X dan"');
         }
 

@@ -5,12 +5,10 @@ namespace Dojo\Infrastructure\Adapters\Output;
 use Dojo\Domain\Model\Kata;
 use Dojo\Domain\Port\KataRepositoryInterface;
 use Dojo\Domain\Port\WebClientInterface;
-use RuntimeException;
-use Symfony\Component\Panther\Client as PantherClient;
 use Facebook\WebDriver\WebDriverBy;
 use Facebook\WebDriver\WebDriverExpectedCondition;
 use League\HTMLToMarkdown\HtmlConverter;
-use Dojo\Infrastructure\Adapters\Output\PantherWebClient;
+use RuntimeException;
 
 class CodewarsKataRepository implements KataRepositoryInterface
 {
@@ -96,6 +94,7 @@ class CodewarsKataRepository implements KataRepositoryInterface
     private function normalizeLanguage(string $language): string
     {
         $normalized = strtolower(trim($language));
+
         return self::LANGUAGE_MAP[$normalized] ?? $language;
     }
 
@@ -202,6 +201,7 @@ class CodewarsKataRepository implements KataRepositoryInterface
                         }
                     } catch (\Exception $e2) {
                         $this->log("Failed with second method: " . $e2->getMessage());
+
                         try {
                             $this->log("Trying to get content from parent element...");
                             $description = $this->client->executeScript(
@@ -235,6 +235,7 @@ class CodewarsKataRepository implements KataRepositoryInterface
 
                 // Get languages available
                 $this->log("Extracting available languages...");
+
                 try {
                     $languages = $this->client->executeScript(
                         'return Array.from(document.querySelectorAll(".language-selector dd")).map(el => el.textContent.trim()).filter(text => text);'
@@ -244,9 +245,11 @@ class CodewarsKataRepository implements KataRepositoryInterface
                     }
                 } catch (\Exception $e) {
                     $this->log("Failed to get languages with JavaScript, trying crawler...");
+
                     try {
                         $languages = $crawler->filter('.language-selector dd')->each(function ($node) {
                             $text = trim($node->text());
+
                             return $text ?: null;
                         });
                         $languages = array_filter($languages);
@@ -318,6 +321,7 @@ class CodewarsKataRepository implements KataRepositoryInterface
         if ($rank < 0) {
             return abs($rank) . ' kyu';
         }
+
         return $rank . ' dan';
     }
 }

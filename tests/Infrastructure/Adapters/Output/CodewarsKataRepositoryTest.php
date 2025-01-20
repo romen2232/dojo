@@ -2,16 +2,15 @@
 
 namespace Tests\Dojo\Infrastructure\Adapters\Output;
 
-use Dojo\Domain\Model\Kata;
-use Dojo\Infrastructure\Adapters\Output\CodewarsKataRepository;
-use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\MockObject\MockObject;
-use RuntimeException;
-use InvalidArgumentException;
 use Dojo\Domain\Port\WebClientInterface;
-use League\HTMLToMarkdown\HtmlConverter;
-use Symfony\Component\DomCrawler\Crawler;
+use Dojo\Infrastructure\Adapters\Output\CodewarsKataRepository;
 use Facebook\WebDriver\WebDriverWait;
+use InvalidArgumentException;
+use League\HTMLToMarkdown\HtmlConverter;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
+use RuntimeException;
+use Symfony\Component\DomCrawler\Crawler;
 
 class TestCodewarsKataRepository extends CodewarsKataRepository
 {
@@ -88,7 +87,7 @@ class CodewarsKataRepositoryTest extends TestCase
                 ['[data-tippy-content="This kata\'s Sensei"]', $authorFilter],
                 ['.keyword-tag', $tagsFilter],
                 ['#code .CodeMirror-line', $solutionFilter],
-                ['#fixture .CodeMirror-line', $testsFilter]
+                ['#fixture .CodeMirror-line', $testsFilter],
             ]);
 
         $this->client->expects($this->any())
@@ -97,7 +96,7 @@ class CodewarsKataRepositoryTest extends TestCase
                 ['window.scrollTo(0, document.body.scrollHeight);', null],
                 ['window.scrollTo(0, 0);', null],
                 ['return document.querySelector(".description-content .markdown").innerHTML;', '<div>Test description</div>'],
-                ['return Array.from(document.querySelectorAll(".language-selector dd")).map(el => el.textContent.trim()).filter(text => text);', ['PHP', 'JavaScript']]
+                ['return Array.from(document.querySelectorAll(".language-selector dd")).map(el => el.textContent.trim()).filter(text => text);', ['PHP', 'JavaScript']],
             ]);
 
         $this->client->expects($this->any())
@@ -163,7 +162,7 @@ class CodewarsKataRepositoryTest extends TestCase
                 ['window.scrollTo(0, document.body.scrollHeight);', null],
                 ['window.scrollTo(0, 0);', null],
                 ['return document.querySelector(".description-content .markdown").innerHTML;', ''],
-                ['return Array.from(document.querySelectorAll(".language-selector dd")).map(el => el.textContent.trim()).filter(text => text);', []]
+                ['return Array.from(document.querySelectorAll(".language-selector dd")).map(el => el.textContent.trim()).filter(text => text);', []],
             ]);
 
         $this->client->expects($this->any())
@@ -179,7 +178,6 @@ class CodewarsKataRepositoryTest extends TestCase
 
         $this->repository->getKataByUrl('https://www.codewars.com/kata/123456/train/php');
     }
-
 
     private function mockCrawlerFilter(
         MockObject $crawler,

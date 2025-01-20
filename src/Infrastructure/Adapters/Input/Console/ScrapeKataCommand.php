@@ -66,7 +66,7 @@ class ScrapeKataCommand extends Command
                 'tags' => $kata->getTags(),
                 'category' => $kata->getCategory(),
                 'author' => $kata->getAuthor(),
-                'languagesAvailable' => $kata->getLanguagesAvailable()
+                'languagesAvailable' => $kata->getLanguagesAvailable(),
             ];
 
             // Save JSON file with proper permissions
@@ -96,6 +96,7 @@ class ScrapeKataCommand extends Command
             return Command::SUCCESS;
         } catch (\Exception $e) {
             $output->writeln('<e>' . $e->getMessage() . '</e>');
+
             return Command::FAILURE;
         }
     }
@@ -110,6 +111,7 @@ class ScrapeKataCommand extends Command
         $sanitized = trim($sanitized);
         // Replace spaces with underscores
         $sanitized = str_replace(' ', '_', $sanitized);
+
         // Convert to lowercase
         return strtolower($sanitized);
     }

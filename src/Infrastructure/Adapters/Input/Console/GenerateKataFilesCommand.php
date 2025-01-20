@@ -24,7 +24,7 @@ class GenerateKataFilesCommand extends Command
         'go' => 'go',
         'kotlin' => 'kt',
         'scala' => 'scala',
-        'swift' => 'swift'
+        'swift' => 'swift',
     ];
 
     protected function configure(): void
@@ -96,6 +96,7 @@ class GenerateKataFilesCommand extends Command
             return Command::SUCCESS;
         } catch (\Exception $e) {
             $output->writeln('<error>' . $e->getMessage() . '</error>');
+
             return Command::FAILURE;
         }
     }

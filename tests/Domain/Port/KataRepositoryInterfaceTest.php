@@ -4,9 +4,9 @@ namespace Tests\Domain\Port;
 
 use Dojo\Domain\Model\Kata;
 use Dojo\Domain\Port\KataRepositoryInterface;
-use PHPUnit\Framework\TestCase;
 use InvalidArgumentException;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 /**

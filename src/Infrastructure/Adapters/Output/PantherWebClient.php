@@ -3,9 +3,9 @@
 namespace Dojo\Infrastructure\Adapters\Output;
 
 use Dojo\Domain\Port\WebClientInterface;
-use Symfony\Component\Panther\Client as PantherClient;
-use Symfony\Component\DomCrawler\Crawler;
 use Facebook\WebDriver\WebDriverWait;
+use Symfony\Component\DomCrawler\Crawler;
+use Symfony\Component\Panther\Client as PantherClient;
 
 class PantherWebClient implements WebClientInterface
 {
@@ -23,7 +23,7 @@ class PantherWebClient implements WebClientInterface
             '--disable-gpu',
             '--no-sandbox',
             '--disable-dev-shm-usage',
-            '--window-size=1920,1080'
+            '--window-size=1920,1080',
         ]);
     }
 

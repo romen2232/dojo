@@ -59,7 +59,7 @@ class GenerateKataFilesCommandTest extends TestCase
         file_put_contents($jsonPath, json_encode($kataData));
 
         $this->commandTester->execute([
-            'kata-json' => $jsonPath
+            'kata-json' => $jsonPath,
         ]);
 
         $this->assertEquals(0, $this->commandTester->getStatusCode());
@@ -83,7 +83,7 @@ class GenerateKataFilesCommandTest extends TestCase
     public function testInvalidJsonFilePath(): void
     {
         $this->commandTester->execute([
-            'kata-json' => $this->tempDir . '/nonexistent.json'
+            'kata-json' => $this->tempDir . '/nonexistent.json',
         ]);
 
         $this->assertEquals(1, $this->commandTester->getStatusCode());
@@ -96,7 +96,7 @@ class GenerateKataFilesCommandTest extends TestCase
         file_put_contents($jsonPath, 'invalid json content');
 
         $this->commandTester->execute([
-            'kata-json' => $jsonPath
+            'kata-json' => $jsonPath,
         ]);
 
         $this->assertEquals(1, $this->commandTester->getStatusCode());
@@ -120,7 +120,7 @@ class GenerateKataFilesCommandTest extends TestCase
         file_put_contents($jsonPath, json_encode($kataData));
 
         $this->commandTester->execute([
-            'kata-json' => $jsonPath
+            'kata-json' => $jsonPath,
         ]);
 
         $this->assertEquals(0, $this->commandTester->getStatusCode());

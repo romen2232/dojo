@@ -5,8 +5,8 @@ namespace Tests\Dojo\Infrastructure\Adapters\Input\Console;
 use Dojo\Application\Service\KataScraperService;
 use Dojo\Domain\Model\Kata;
 use Dojo\Infrastructure\Adapters\Input\Console\ScrapeKataCommand;
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Tester\CommandTester;
 
@@ -77,7 +77,7 @@ class ScrapeKataCommandTest extends TestCase
 
         $this->commandTester->execute([
             'url' => 'https://codewars.com/kata/test-id',
-            '--katas-dir' => $this->tempDir
+            '--katas-dir' => $this->tempDir,
         ]);
 
         $this->assertEquals(0, $this->commandTester->getStatusCode());
@@ -114,7 +114,7 @@ class ScrapeKataCommandTest extends TestCase
 
         $this->commandTester->execute([
             'url' => 'https://codewars.com/kata/invalid-id',
-            '--katas-dir' => $this->tempDir
+            '--katas-dir' => $this->tempDir,
         ]);
 
         $this->assertEquals(1, $this->commandTester->getStatusCode());
@@ -146,7 +146,7 @@ class ScrapeKataCommandTest extends TestCase
         $customDir = $this->tempDir . '/custom_katas';
         $this->commandTester->execute([
             'url' => 'https://codewars.com/kata/test-id',
-            '--katas-dir' => $customDir
+            '--katas-dir' => $customDir,
         ]);
 
         $expectedPath = $customDir . '/codewars/javascript/7_kyu/test_kata';
@@ -178,7 +178,7 @@ class ScrapeKataCommandTest extends TestCase
 
         $this->commandTester->execute([
             'url' => 'https://codewars.com/kata/test-id',
-            '--katas-dir' => $this->tempDir
+            '--katas-dir' => $this->tempDir,
         ]);
 
         $expectedPath = $this->tempDir . '/codewars/php/8_kyu/test_kata_special_chars';
@@ -216,7 +216,7 @@ class ScrapeKataCommandTest extends TestCase
             ->willReturn($kata);
 
         $this->commandTester->execute([
-            'url' => 'https://codewars.com/kata/test-id'
+            'url' => 'https://codewars.com/kata/test-id',
         ]);
 
         $this->assertEquals(0, $this->commandTester->getStatusCode());

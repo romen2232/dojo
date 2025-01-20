@@ -3,9 +3,8 @@
 namespace Tests\Domain\Model;
 
 use Dojo\Domain\Model\Kata;
-use PHPUnit\Framework\TestCase;
 use InvalidArgumentException;
-use TypeError;
+use PHPUnit\Framework\TestCase;
 
 class KataTest extends TestCase
 {
@@ -253,7 +252,7 @@ PHP;
             'tags' => ['algorithms'],
             'category' => 'algorithms',
             'author' => 'author',
-            'languagesAvailable' => ['php']
+            'languagesAvailable' => ['php'],
         ];
 
         $data[$field] = $value;

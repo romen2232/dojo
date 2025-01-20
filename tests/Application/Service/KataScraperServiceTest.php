@@ -5,9 +5,9 @@ namespace Tests\Dojo\Application\Service;
 use Dojo\Application\Service\KataScraperService;
 use Dojo\Domain\Model\Kata;
 use Dojo\Domain\Port\KataRepositoryInterface;
-use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\MockObject\MockObject;
 use InvalidArgumentException;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 class KataScraperServiceTest extends TestCase
