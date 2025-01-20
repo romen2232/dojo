@@ -23,6 +23,7 @@
      │   ├── language (php, python, etc)
      │   │   ├── kyu (1 kyu, 2 kyu, etc)
      │   │   └── kata (kata name)
+     │   │       ├── kataName.json (with the kata details)
      │   │       ├── README.md (with the description of the kata)
      │   │       ├── test.php (with the tests)
      │   │       ├── solution.php (with the solution)
