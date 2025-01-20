@@ -64,17 +64,13 @@ class GenerateKataFilesCommandTest extends TestCase
 
         $this->assertEquals(0, $this->commandTester->getStatusCode());
 
-        // Verify directory structure
-        $this->assertDirectoryExists($this->tempDir . '/solution');
-        $this->assertDirectoryExists($this->tempDir . '/tests');
-
         // Verify files were created with correct content
-        $this->assertFileExists($this->tempDir . '/solution/solution.py');
-        $this->assertFileExists($this->tempDir . '/tests/test.py');
+        $this->assertFileExists($this->tempDir . '/solution.py');
+        $this->assertFileExists($this->tempDir . '/test.py');
         $this->assertFileExists($this->tempDir . '/README.md');
 
-        $this->assertEquals('def solution():', file_get_contents($this->tempDir . '/solution/solution.py'));
-        $this->assertEquals('def test_solution():', file_get_contents($this->tempDir . '/tests/test.py'));
+        $this->assertEquals('def solution():', file_get_contents($this->tempDir . '/solution.py'));
+        $this->assertEquals('def test_solution():', file_get_contents($this->tempDir . '/test.py'));
 
         $expectedReadme = "# Test Kata\n\nDifficulty: 4 kyu\n\nTest description";
         $this->assertEquals($expectedReadme, file_get_contents($this->tempDir . '/README.md'));
@@ -124,8 +120,8 @@ class GenerateKataFilesCommandTest extends TestCase
         ]);
 
         $this->assertEquals(0, $this->commandTester->getStatusCode());
-        $this->assertFileExists($this->tempDir . '/solution/solution.' . $expectedExtension);
-        $this->assertFileExists($this->tempDir . '/tests/test.' . $expectedExtension);
+        $this->assertFileExists($this->tempDir . '/solution.' . $expectedExtension);
+        $this->assertFileExists($this->tempDir . '/test.' . $expectedExtension);
     }
 
     public function languageExtensionProvider(): array

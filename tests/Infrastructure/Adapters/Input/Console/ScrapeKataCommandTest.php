@@ -87,7 +87,7 @@ class ScrapeKataCommandTest extends TestCase
         $this->assertDirectoryExists($expectedPath);
 
         // Verify JSON file exists and content
-        $jsonPath = $expectedPath . '/test_kata_name.json';
+        $jsonPath = $expectedPath . '/.test_kata_name.json';
         $this->assertFileExists($jsonPath);
 
         $jsonContent = json_decode(file_get_contents($jsonPath), true);
@@ -151,7 +151,7 @@ class ScrapeKataCommandTest extends TestCase
 
         $expectedPath = $customDir . '/codewars/javascript/7_kyu/test_kata';
         $this->assertDirectoryExists($expectedPath);
-        $this->assertFileExists($expectedPath . '/test_kata.json');
+        $this->assertFileExists($expectedPath . '/.test_kata.json');
     }
 
     public function testSanitizeFolderNameWithSpecialCharacters(): void
@@ -185,7 +185,7 @@ class ScrapeKataCommandTest extends TestCase
         $this->assertDirectoryExists($expectedPath);
 
         // The sanitized name should only contain alphanumeric characters, spaces, and hyphens
-        $jsonPath = $expectedPath . '/test_kata_special_chars.json';
+        $jsonPath = $expectedPath . '/.test_kata_special_chars.json';
         $this->assertFileExists($jsonPath);
 
         // Verify the content to ensure the original name is preserved in the JSON
