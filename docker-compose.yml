@@ -4,7 +4,7 @@ services:
   dojo:
     build:
       context: .
-      dockerfile: docker/Dockerfile
+      dockerfile: docker/dojo/Dockerfile
       args:
         - USER_ID=${UID:-1000}
         - GROUP_ID=${GID:-1000}
