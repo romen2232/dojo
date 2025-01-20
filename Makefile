@@ -56,6 +56,10 @@ scrape-kata: ## Scrape a kata from Codewars (Usage: make scrape-kata URL=<kata-u
 generate-kata: ## Generate kata files (Usage: make generate-kata PATH=<kata-json-path>)
 	docker-compose exec dojo php bin/console kata:generate $(PATH)
 
+.PHONY: kata
+kata: ## Scrape kata and generate files (Usage: make kata-full URL=<kata-url> [DIR=<custom-dir>])
+	docker-compose exec dojo php bin/console kata:full $(URL) $(if $(DIR),--katas-dir=$(DIR))
+
 .PHONY: logs
 logs: ## View Docker container logs
 	docker-compose logs -f
@@ -72,3 +76,4 @@ clean: ## Clean up generated files and Docker containers
 
 .PHONY: validate
 validate: lint test ## Run all validation (linting and tests)
+

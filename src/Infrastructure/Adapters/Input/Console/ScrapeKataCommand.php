@@ -3,13 +3,12 @@
 namespace Dojo\Infrastructure\Adapters\Input\Console;
 
 use Dojo\Application\Service\KataScraperService;
-use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class ScrapeKataCommand extends Command
+class ScrapeKataCommand extends BaseKataCommand
 {
     protected static $defaultName = 'kata:scrape';
 
@@ -30,11 +29,22 @@ class ScrapeKataCommand extends Command
     {
         try {
             $katasDir = $input->getOption('katas-dir');
+
+            // If it's a relative path starting with ./ or ../, resolve it from /dojo
+            if (preg_match('/^\.\.?\//', $katasDir)) {
+                $katasDir = '/dojo/' . $katasDir;
+            }
+            // If it's not an absolute path, make it relative to /dojo
+            elseif (!str_starts_with($katasDir, '/')) {
+                $katasDir = '/dojo/' . $katasDir;
+            }
+
+            // Clean up the path
+            $katasDir = rtrim($katasDir, '/');
+
             $kata = $this->kataScraperService->scrapeKata($input->getArgument('url'));
 
-            // Extract difficulty number from the string (e.g., "6 kyu" -> "6")
-            preg_match('/(\d+)\s*kyu/', $kata->getDifficulty(), $matches);
-            $kyuLevel = $matches[1] ?? '0';
+            $kyuLevel = $this->getKyuLevel($kata->getDifficulty());
 
             // Create the folder structure
             $language = strtolower($kata->getLanguage());
@@ -47,11 +57,7 @@ class ScrapeKataCommand extends Command
             );
 
             // Create directories recursively with proper permissions
-            $oldUmask = umask(0);
-            if (!is_dir($folderPath)) {
-                mkdir($folderPath, 0777, true);
-            }
-            umask($oldUmask);
+            $this->createDirectoryWithPermissions($folderPath);
 
             // Store kata info in JSON
             $jsonData = [
@@ -69,10 +75,9 @@ class ScrapeKataCommand extends Command
                 'languagesAvailable' => $kata->getLanguagesAvailable(),
             ];
 
-            // Save JSON file with proper permissions
-            $jsonPath = sprintf('%s/%s.json', $folderPath, $this->sanitizeFolderName($kata->getName()));
-            file_put_contents($jsonPath, json_encode($jsonData, JSON_PRETTY_PRINT));
-            chmod($jsonPath, 0666);
+            // Save JSON file with proper permissions (hidden file)
+            $jsonPath = sprintf('%s/.%s.json', $folderPath, $this->sanitizeFolderName($kata->getName()));
+            $this->writeFileWithPermissions($jsonPath, json_encode($jsonData, JSON_PRETTY_PRINT));
 
             $output->writeln(sprintf("\n<info>Kata information saved to: %s</info>", $jsonPath));
 
@@ -93,26 +98,11 @@ class ScrapeKataCommand extends Command
                 $output->writeln("\n<info>Tests:</info>\n" . $kata->getTests());
             }
 
-            return Command::SUCCESS;
+            return self::SUCCESS;
         } catch (\Exception $e) {
-            $output->writeln('<e>' . $e->getMessage() . '</e>');
+            $output->writeln('<error>' . $e->getMessage() . '</error>');
 
-            return Command::FAILURE;
+            return self::FAILURE;
         }
-    }
-
-    private function sanitizeFolderName(string $name): string
-    {
-        // Remove special characters except alphanumeric, spaces, and hyphens
-        $sanitized = preg_replace('/[^a-zA-Z0-9\s-]/', '', $name);
-        // Replace multiple spaces with a single space
-        $sanitized = preg_replace('/\s+/', ' ', $sanitized);
-        // Trim spaces from beginning and end
-        $sanitized = trim($sanitized);
-        // Replace spaces with underscores
-        $sanitized = str_replace(' ', '_', $sanitized);
-
-        // Convert to lowercase
-        return strtolower($sanitized);
     }
 }
