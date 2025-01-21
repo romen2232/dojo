@@ -1,0 +1,24 @@
+#!/usr/bin/env php
+<?php
+
+require __DIR__.'/../vendor/autoload.php';
+
+use Dojo\Application\Service\KataScraperService;
+use Dojo\Infrastructure\Adapters\Input\Console\FullKataCommand;
+use Dojo\Infrastructure\Adapters\Input\Console\GenerateKataFilesCommand;
+use Dojo\Infrastructure\Adapters\Input\Console\ScrapeKataCommand;
+use Dojo\Infrastructure\Adapters\Output\CodewarsKataRepository;
+use Symfony\Component\Console\Application;
+
+$application = new Application('Dojo Wars', '1.0.0');
+
+$kataRepository = new CodewarsKataRepository();
+$kataScraperService = new KataScraperService($kataRepository);
+$scrapeKataCommand = new ScrapeKataCommand($kataScraperService);
+$generateKataFilesCommand = new GenerateKataFilesCommand();
+
+$application->add($scrapeKataCommand);
+$application->add($generateKataFilesCommand);
+$application->add(new FullKataCommand($kataScraperService, $scrapeKataCommand, $generateKataFilesCommand));
+
+$application->run();

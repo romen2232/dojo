@@ -1,0 +1,19 @@
+version: "3.8"
+
+services:
+  dojo:
+    build:
+      context: .
+      dockerfile: docker/dojo/Dockerfile
+      args:
+        - USER_ID=${UID:-1000}
+        - GROUP_ID=${GID:-1000}
+    volumes:
+      - type: bind
+        source: .
+        target: /dojo
+        consistency: cached
+    environment:
+      - PHP_IDE_CONFIG=serverName=dojo
+    tty: true
+    user: "${UID:-1000}:${GID:-1000}"

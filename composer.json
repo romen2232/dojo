@@ -1,0 +1,29 @@
+{
+    "name": "dojo/wars",
+    "description": "A tool to practice Codewars katas locally",
+    "type": "project",
+    "require": {
+        "php": ">=8.1",
+        "symfony/dom-crawler": "^6.0",
+        "symfony/css-selector": "^6.0",
+        "guzzlehttp/guzzle": "^7.0",
+        "symfony/console": "^6.0",
+        "symfony/panther": "^2.1",
+        "league/html-to-markdown": "^5.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "mikey179/vfsstream": "^1.6",
+        "friendsofphp/php-cs-fixer": "^3.66"
+    },
+    "autoload": {
+        "psr-4": {
+            "Dojo\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    }
+}
