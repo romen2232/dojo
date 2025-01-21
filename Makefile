@@ -23,9 +23,7 @@ shell: ## Access PHP container shell
 
 .PHONY: install
 install: ## Install all dependencies
-	make build
-	make up
-	make composer-install
+	make build && make up && make composer-install
 
 .PHONY: composer-install
 composer-install: ## Install composer dependencies
