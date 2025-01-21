@@ -21,6 +21,12 @@ down: ## Stop Docker containers
 shell: ## Access PHP container shell
 	docker compose exec dojo bash
 
+.PHONY: install
+install: ## Install all dependencies
+	make build
+	make up
+	make composer-install
+
 .PHONY: composer-install
 composer-install: ## Install composer dependencies
 	docker compose exec dojo composer install

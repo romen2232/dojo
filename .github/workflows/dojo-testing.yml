@@ -39,11 +39,6 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Build Docker
-        run: |
-          make build
-          make up
-
       - name: Install Dependencies
         run: make install
 
